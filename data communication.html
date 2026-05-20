@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Communication Assignment Summary</title>
+    <style>
+        /* Modern CSS Reset & Variables */
+        :root {
+            --primary: #0f172a;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --dark: #020617;
+            --light: #f7fafc;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e0;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: rgba(42, 67, 101, 0.9); /* Dark blue background (#2a4365) */
+            backdrop-filter: blur(12px);
+            position: sticky;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+        }
+
+        .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--white); /* Ensure hover color is white or a contrasting light color */
+        }
+
+        /* Hero / Bio Section */
+        .hero {
+            background-color: var(--white); /* White background */
+            color: var(--text-main);
+            padding: 6rem 2rem;
+            text-align: center;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero .profile-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: slideIn 0.8s ease-out;
+            color: var(--primary); /* Dark text for contrast */
+        }
+
+        .hero p {
+            animation: slideIn 1s ease-out;
+            color: var(--text-main); /* Dark text for contrast */
+        }
+        .hero .bio-text {
+            color: var(--text-muted); /* Slightly lighter dark text for bio */
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--gray-200); /* Lighter border on white background */
+            object-fit: cover;
+            background-color: var(--gray-200);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .bio-text {
+            font-size: 1.05rem;
+            max-width: 600px;
+            color: var(--text-muted); /* Darker text for readability on white */
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background: #ffffff;
+            padding: 3.5rem;
+            margin: 2rem 0;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-200);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Diagram Component */
+        .diagram-box {
+            background: #f8fafc;
+            border: 1px solid var(--gray-200);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto;
+        }
+
+        /* Video Container (Responsive) */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin-top: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Buttons & External Links */
+        .btn-link {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent), #f6ad55);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(237, 137, 54, 0.4);
+            margin: 0.5rem 0;
+        }
+
+        .btn-link:hover {
+            background-color: #dd6b20;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #2a4365; /* Dark blue background */
+            color: white;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar (3 Menus linking internally) -->
+    <header>
+        <nav>
+            <a href="#" class="logo">Data Comm Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="#fundamentals">1. Fundamentals</a></li>
+                <li><a href="#telegraphy">2. History & Telegraphy</a></li>
+                <li><a href="#media">3. Transmission Media</a></li>
+                <li><a href="#inspiration">4. Inspiration</a></li>
+                <li><a href="#resources">5. Resources & Assignment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Bio / Hero Section -->
+    <section class="hero" id="bio">
+        <canvas id="particles-canvas"></canvas>
+        <div class="profile-container">
+            <!-- Replace placeholder URL with your real image link if desired -->
+            <img src="WhatsApp Image 2026-05-19 at 4.39.40 AM.jpeg" alt="Student Profile Picture" class="profile-img">
+            <h1>Richmond Kojo Pako Asare</h1>
+            <p><strong>Student ID:</strong> PUIT/24210019</p>
+            <p class="bio-text">
+                Welcome to my academic showcase. I am an undergraduate student specializing in Network Engineering and Information Technology. This page compiles the core methodologies, architectural patterns, and practical reflections gathered throughout my journey in the Data Communication curriculum.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content Container containing 5 distinct sections -->
+    <main>
+
+        <!-- Section 1: Fundamentals of Data Communication -->
+        <section id="fundamentals">
+            <h2>1. Fundamentals of Data Communication</h2>
+            <p>Data communication is the exchange of data between a source and a receiver via some form of transmission medium such as a wire cable. For data communication to occur, the communicating devices must be part of a communication system made up of a combination of hardware and software.</p>
+            
+            <h3>The Five Core Components</h3>
+            <ul>
+                <li><strong>Message:</strong> The information (data) to be communicated (text, numbers, images, audio, video).</li>
+                <li><strong>Sender:</strong> The device that sends the data message (computer, workstation, telephone handset).</li>
+                <li><strong>Receiver:</strong> The device that receives the message.</li>
+                <li><strong>Transmission Medium:</strong> The physical path by which a message travels from sender to receiver.</li>
+                <li><strong>Protocol:</strong> A set of rules that govern data communication. It represents an agreement between the communicating devices.</li>
+            </ul>
+        </section>
+
+        <!-- Section 2: Historical Milestones & Telegraphy -->
+        <section id="telegraphy">
+            <h2>2. Historical Milestones & Telegraphy</h2>
+            <p>Long before modern fiber optics and wireless networks, electrical data communication began with the electrical telegraph. Developed in the 1830s and 1840s by Samuel Morse and other inventors, it revolutionized long-distance communication by mapping characters into electrical pulses (dots and dashes) transmitted across metallic wires.</p>
+            
+            <div class="diagram-box">
+                <h4>Conceptual Circuit Diagram of a Landline Telegraph System</h4>
+                <!-- Scalable Vector Graphic (SVG) Diagram embedded natively for crisp rendering -->
+                <svg class="diagram-svg" viewBox="0 0 600 200" width="100%" height="200">
+                    <!-- Background Line (The Wire) -->
+                    <line x1="100" y1="120" x2="500" y2="120" stroke="#1a202c" stroke-width="3" stroke-dasharray="5,5" />
+                    <text x="300" y="100" text-anchor="middle" font-weight="bold" fill="#319795">Long-Distance Transmission Line (Single Wire)</text>
+
+                    <!-- Station A (Left) -->
+                    <g transform="translate(40, 60)">
+                        <rect width="120" height="100" rx="5" fill="#e2e8f0" stroke="#2a4365" stroke-width="2"/>
+                        <text x="60" y="25" text-anchor="middle" font-weight="bold" fill="#2a4365">Station A (Sender)</text>
+                        <!-- Key switch -->
+                        <line x1="20" y1="70" x2="60" y2="50" stroke="#ed8936" stroke-width="3" id="telegraph-key" />
+                        <circle cx="20" cy="70" r="4" fill="#1a202c"/>
+                        <circle cx="60" cy="70" r="4" fill="#1a202c"/>
+                        <text x="40" y="90" text-anchor="middle" font-size="12" fill="#4a5568">Morse Key</text>
+                    </g>
+
+                    <!-- Station B (Right) -->
+                    <g transform="translate(440, 60)">
+                        <rect width="120" height="100" rx="5" fill="#e2e8f0" stroke="#2a4365" stroke-width="2"/>
+                        <text x="60" y="25" text-anchor="middle" font-weight="bold" fill="#2a4365">Station B (Receiver)</text>
+                        <!-- Sounder Electromagnet -->
+                        <rect x="40" y="50" width="40" height="30" rx="3" fill="#2a4365"/>
+                        <text x="60" y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Coil</text>
+                        <line x1="30" y1="45" x2="90" y2="45" stroke="#ed8936" stroke-width="3"/>
+                        <text x="60" y="94" text-anchor="middle" font-size="12" fill="#4a5568">Sounder/Register</text>
+                    </g>
+
+                    <!-- Earth Ground Connections -->
+                    <line x1="100" y1="160" x2="100" y2="180" stroke="#1a202c" stroke-width="2"/>
+                    <line x1="90" y1="180" x2="110" y2="180" stroke="#1a202c" stroke-width="3"/>
+                    <line x1="94" y1="184" x2="106" y2="184" stroke="#1a202c" stroke-width="2"/>
+                    <text x="120" y="180" font-size="12" fill="#718096">Earth Ground</text>
+
+                    <line x1="500" y1="160" x2="500" y2="180" stroke="#1a202c" stroke-width="2"/>
+                    <line x1="490" y1="180" x2="510" y2="180" stroke="#1a202c" stroke-width="3"/>
+                    <line x1="494" y1="184" x2="506" y2="184" stroke="#1a202c" stroke-width="2"/>
+                </svg>
+                <p style="font-size: 0.9rem; color:#4a5568; margin-top: 0.5rem;">
+                    <em>Figure 1: Simplified schematic showing how completing the circuit via a Morse Key pulses an electromagnetic sounder at the receiving end through a single line and an Earth return path.</em>
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Guided and Unguided Transmission Media -->
+        <section id="media">
+            <h2>3. Guided and Unguided Transmission Media</h2>
+            <p>Data travels from source to destination via paths categorized as either physical paths (guided) or open-air paths (unguided).</p>
+            
+            <h3>Guided Media (Wired)</h3>
+            <ul>
+                <li><strong>Twisted-Pair Cable:</strong> Consists of two insulated copper wires twisted together to reduce electromagnetic interference (EMI). Used extensively in LANs (e.g., Cat6).</li>
+                <li><strong>Coaxial Cable:</strong> Carries high-frequency signals and has a central core conductor surrounded by an outer shield. Commonly found in cable TV networks.</li>
+                <li><strong>Fiber-Optic Cable:</strong> Uses pulses of light to transmit data through glass or plastic cores. It offers the highest bandwidth and resistance to attenuation.</li>
+            </ul>
+
+            <h3>Unguided Media (Wireless)</h3>
+            <ul>
+                <li><strong>Radio Waves:</strong> Electromagnetic waves ranging from 3 kHz to 1 GHz. They are omnidirectional and effective for wide-area coverage.</li>
+                <li><strong>Microwaves:</strong> Unidirectional high-frequency waves (1 GHz to 300 GHz) requiring line-of-sight installation between line antennas.</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: What Inspires Me -->
+        <section id="inspiration">
+            <h2>4. What Inspires Me</h2>
+            <p>The relentless scaling of communication protocols is incredibly inspiring. The concept that raw information can travel around the globe in milliseconds—spanning under-sea fiber cables, routing engines, and local access points seamlessly—drives my curiosity to explore the boundaries of global system engineering.</p>
+            <blockquote>
+                "The internet is not a luxury, it is a basic necessity for data exchange, human learning, and structural cooperation across modern societies."
+            </blockquote>
+
+            <!-- Embedded YouTube Video Requirement (Plays directly inside this tab/container) -->
+            <h3>Educational Supplement: How the Internet Works</h3>
+            <div class="video-container">
+                <!-- Using a standard public networking education video from YouTube -->
+                <iframe 
+                    src="https://www.youtube.com/embed/VDkYgGGtDnc" 
+                    title="Data Communication & Networking Video Lesson"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+        <!-- Section 5: Academic Resources & Verification Links -->
+        <section id="resources">
+            <h2>5. Academic Resources & Assignments</h2>
+            <p>Access my academic submissions and external tools below. The links are managed exactly per structural criteria.</p>
+            
+            <div style="margin-top: 1.5rem;">
+                <!-- Link 1: External Link opening in a brand new tab/window -->
+                <h3>Link 1: Final Assignment Sheet</h3>
+                <p>Review the comprehensive breakdown of lab configurations and theoretical computations conducted over the semester.</p>
+                <a href="https://docs.google.com/document/d/1uRaQ96R34aFUlDaIx9NtMdtgFsJRTBj_O1FA0LP_KSI/edit?usp=sharing" class="btn-link" target="_blank" rel="noopener noreferrer">
+                    Open Assignment Document (New Tab) &rarr;
+                </a>
+            </div>
+
+            
+        </section>
+
+    </main>
+
+    <!-- Footer Meta Tracking -->
+    <footer>
+        <p>&copy; 2026 Richmond Kojo Pako Asare | Data Communication Assignment Webpage | Repository Deployment</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let nodes = [];
+
+        function init() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            nodes = [];
+            for (let i = 0; i < 60; i++) {
+                nodes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(42, 67, 101, 0.5)'; /* Dark blue particles */
+            ctx.strokeStyle = 'rgba(42, 67, 101, 0.2)'; /* Dark blue lines */
+            
+            nodes.forEach(n => {
+                n.x += n.vx; n.y += n.vy;
+                if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+                if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+                
+                ctx.beginPath(); ctx.arc(n.x, n.y, 1.5, 0, Math.PI * 2); ctx.fill();
+                
+                nodes.forEach(n2 => {
+                    let d = Math.hypot(n.x - n2.x, n.y - n2.y);
+                    if (d < 120) {
+                        ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', init);
+        init(); draw();
+    </script>
+</body>
+</html>
